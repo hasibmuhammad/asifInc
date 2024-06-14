@@ -1,54 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Space, Table, Tag } from "antd";
-const { Column, ColumnGroup } = Table;
+import Loader from "./Loader";
+import axios from "axios";
+import { Link } from "react-router-dom";
+const { Column } = Table;
 
-const data = [
-  {
-    key: "1",
-    firstName: "John",
-    lastName: "Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    firstName: "Jim",
-    lastName: "Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    firstName: "Joe",
-    lastName: "Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-];
-const Users = () => (
-  <>
-    <h1 className="text-3xl font-bold">All Users</h1>
-    <br />
-    <Table dataSource={data}>
-      <Column title="First Name" dataIndex="firstName" key="firstName" />
-      <Column title="Last Name" dataIndex="lastName" key="lastName" />
-      <Column title="Age" dataIndex="age" key="age" />
-      <Column title="Address" dataIndex="address" key="address" />
-      <Column
-        title="Action"
-        key="action"
-        render={(_, record) => (
-          <Space size="middle">
-            <a>Details</a>
-            <a>Block</a>
-            <a>Delete</a>
-          </Space>
-        )}
-      />
-    </Table>
-  </>
-);
+const Users = () => {
+  const [loading, setLoading] = useState(true);
+  const [tableData, setTableData] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:3000/employees").then((res) => {
+      if (res?.data) {
+        setTableData(res.data);
+        setLoading(false);
+      }
+    });
+  }, []);
+
+  // handle block
+  const handleBlock = (id) => {
+    console.log(id);
+  };
+  // handle delete
+  const handleDelete = (id) => {
+    console.log(id);
+  };
+  return (
+    <>
+      <h1 className="text-3xl font-bold">Employees</h1>
+      <br />
+      <hr />
+      <br />
+      {loading && <Loader />}
+      {!loading && (
+        <Table dataSource={tableData}>
+          <Column title="First Name" dataIndex="firstname" key="firstname" />
+          <Column title="Last Name" dataIndex="lastname" key="lastName" />
+          <Column title="Phone No." dataIndex="phone" key="phone" />
+          <Column title="Email" dataIndex="email" key="email" />
+          <Column
+            title="Action"
+            key="action"
+            render={(_, record) => (
+              <Space size="middle">
+                <Link to={`/admin/employees/${record._id}`}>
+                  <button className="font-semibold text-blue-400">
+                    Details
+                  </button>
+                </Link>
+                <button
+                  onClick={() => handleBlock(record._id)}
+                  className="font-semibold text-red-400"
+                >
+                  Block
+                </button>
+                <button
+                  onClick={() => handleDelete(record._id)}
+                  className="font-semibold text-red-400"
+                >
+                  Delete
+                </button>
+              </Space>
+            )}
+          />
+        </Table>
+      )}
+    </>
+  );
+};
 export default Users;

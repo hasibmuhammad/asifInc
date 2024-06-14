@@ -7,6 +7,7 @@ import Home from "../components/Home";
 import PrivateRoute from "./PrivateRoute";
 import Users from "../components/Users";
 import CreateUser from "../components/CreateUser";
+import EmployeeDetail from "../components/EmployeeDetail";
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: "users",
+            path: "employees",
             element: (
               <PrivateRoute>
                 <Users />
@@ -46,7 +47,15 @@ export const router = createBrowserRouter([
             ),
           },
           {
-            path: "users/create",
+            path: "employees/:id",
+            element: (
+              <PrivateRoute>
+                <EmployeeDetail />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "employees/create",
             element: (
               <PrivateRoute>
                 <CreateUser />

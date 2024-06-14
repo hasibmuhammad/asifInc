@@ -18,16 +18,16 @@ const items = [
   },
   {
     key: "allusers",
-    label: "Users",
+    label: "Employees",
     icon: <UserOutlined />,
     children: [
       {
-        key: "users",
-        label: "All Users",
+        key: "employees",
+        label: "All",
       },
       {
-        key: "users/create",
-        label: "Create User",
+        key: "employees/create",
+        label: "Create",
       },
     ],
   },

@@ -27,8 +27,9 @@ const CreateUser = () => {
     if (!firstname || !lastname || !phone || !email) {
       return setError("Please provide all the information!");
     }
-    const newUser = { firstname, lastname, phone, email };
+    const newUser = { firstname, lastname, phone, email, blocked: false };
 
+    // employee creation
     axios
       .post(
         `http://localhost:3000/create-employee?email=${user?.email}`,
@@ -47,7 +48,9 @@ const CreateUser = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold">Create an user</h1>
+      <h1 className="text-3xl font-bold">Create an employee</h1>
+      <br />
+      <hr />
       <br />
       <form
         onSubmit={handleSubmit}
