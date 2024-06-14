@@ -1,6 +1,9 @@
+import axios from "axios";
 import { useState } from "react";
+import useAuthContext from "../hooks/useAuthContext";
 
 const CreateUser = () => {
+  const { user } = useAuthContext();
   const [error, setError] = useState("");
   const handleSubmit = (e) => {
     setError("");
@@ -16,7 +19,14 @@ const CreateUser = () => {
       return setError("Please provide all the information!");
     }
     const newUser = { firstname, lastname, phone, email };
-    console.log(newUser);
+
+    axios
+      .post(
+        `http://localhost:3000/create-employee?email=${user?.email}`,
+        newUser
+      )
+      .then((res) => console.log(res))
+      .catch((error) => console.error(error));
   };
   return (
     <>
