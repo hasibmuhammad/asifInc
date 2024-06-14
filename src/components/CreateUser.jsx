@@ -2,9 +2,18 @@ import axios from "axios";
 import { useState } from "react";
 import useAuthContext from "../hooks/useAuthContext";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const CreateUser = () => {
   const { user } = useAuthContext();
   const [error, setError] = useState("");
+
+  // toast
+  const notifySuccess = (message) => toast.success(message);
+  const notifyError = (message) => toast.error(message);
+
+  // handle the submission
   const handleSubmit = (e) => {
     setError("");
     e.preventDefault();
@@ -25,9 +34,17 @@ const CreateUser = () => {
         `http://localhost:3000/create-employee?email=${user?.email}`,
         newUser
       )
-      .then((res) => console.log(res))
+      .then((res) => {
+        if (res.data?.insertedId) {
+          notifySuccess("Employee Created Succussfully!");
+          form.reset();
+        } else {
+          notifyError(res.data?.message);
+        }
+      })
       .catch((error) => console.error(error));
   };
+
   return (
     <>
       <h1 className="text-3xl font-bold">Create an user</h1>
@@ -87,6 +104,7 @@ const CreateUser = () => {
           </button>
         </div>
       </form>
+      <ToastContainer />
     </>
   );
 };
