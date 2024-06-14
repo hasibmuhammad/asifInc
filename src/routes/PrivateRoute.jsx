@@ -6,7 +6,12 @@ const PrivateRoute = ({ children }) => {
   const { loading, user } = useAuthContext();
   const location = useLocation();
 
-  if (loading) return <Loader />;
+  if (loading)
+    return (
+      <div className="flex flex-row justify-center items-center min-h-96">
+        <Loader />
+      </div>
+    );
 
   if (!user)
     return <Navigate state={location.pathname} to={"/signin"} replace />;

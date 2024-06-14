@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import useAuthContext from "../hooks/useAuthContext";
+import Loader from "./Loader";
 
 const Header = () => {
+  const { loading, user, signout } = useAuthContext();
   return (
     <header className="flex justify-between">
       <Link to={"/"}>
@@ -8,9 +11,24 @@ const Header = () => {
           ASIF Inc.
         </h1>
       </Link>
-      <Link to={"/admin/dashboard"} className="text-blue-500 font-semibold">
-        Dashboard
-      </Link>
+      <div>
+        {loading && <Loader />}
+        {!loading && !user && (
+          <Link to={"/signin"}>
+            <button className="px-4 py-2 outline rounded font-bold">
+              Sign In
+            </button>
+          </Link>
+        )}
+        {user && !loading && (
+          <button
+            onClick={() => signout()}
+            className="px-4 py-2 outline rounded font-bold"
+          >
+            Sign Out
+          </button>
+        )}
+      </div>
     </header>
   );
 };

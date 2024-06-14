@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuthContext from "../hooks/useAuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
 const Login = () => {
   const [error, setError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-  const { signIn } = useAuthContext();
+  const { signIn, user, loading } = useAuthContext();
 
   const handleSubmit = (e) => {
-    setError("");
     e.preventDefault();
+    setError("");
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
@@ -27,6 +28,20 @@ const Login = () => {
       })
       .catch((error) => console.error(error));
   };
+
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/admin/dashboard");
+    }
+  }, [user, loading, navigate]);
+
+  if (loading)
+    return (
+      <div className="flex flex-col justify-center items-center min-h-96">
+        <Loader />
+      </div>
+    );
+
   return (
     <div className="flex items-center flex-col justify-center min-h-screen">
       <h1 className="text-3xl font-semibold uppercase tracking-widest">
