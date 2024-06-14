@@ -34,7 +34,7 @@ const CreateUser = () => {
             className="border border-blue-200 w-full px-4 py-2 rounded-lg outline-none"
             type="text"
             name="firstname"
-            // required
+            required
           />
         </div>
         <div>
@@ -44,7 +44,7 @@ const CreateUser = () => {
             className="border border-blue-200 w-full px-4 py-2 rounded-lg outline-none"
             type="text"
             name="lastname"
-            // required
+            required
           />
         </div>
         <div>
@@ -54,6 +54,7 @@ const CreateUser = () => {
             className="border border-blue-200 w-full px-4 py-2 rounded-lg outline-none"
             type="number"
             name="phone"
+            required
           />
         </div>
         <div>
@@ -63,7 +64,7 @@ const CreateUser = () => {
             className="border border-blue-200 w-full px-4 py-2 rounded-lg outline-none"
             type="email"
             name="email"
-            // required
+            required
           />
         </div>
         {error && <p className="text-red-400">{error}</p>}

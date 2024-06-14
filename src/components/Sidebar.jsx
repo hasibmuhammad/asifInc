@@ -63,6 +63,7 @@ const Sidebar = () => {
         onClick={(item) => {
           if (item.key === "signout") {
             signout();
+            navigate("/");
           } else {
             navigate(item.key);
           }

@@ -28,13 +28,14 @@ async function run() {
     await client.connect();
 
     // Collections
-    const users = client.db("asifIncDB").collection("users");
     const employees = client.db("asifIncDB").collection("employees");
 
     // create employee
-    // app.post("/create-employee", async (req, res) => {
-    //     users.findOne
-    // });
+    app.post("/create-employee", async (req, res) => {
+      const body = await req.body;
+
+      console.log(body);
+    });
   } catch (error) {
     console.error(error);
   }

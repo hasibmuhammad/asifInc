@@ -26,7 +26,12 @@ const Login = () => {
           navigate(location.state ?? "/admin/dashboard");
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        if (error) {
+          setError("Email or Password is wrong!");
+          return navigate("/signin");
+        }
+      });
   };
 
   useEffect(() => {
@@ -35,7 +40,7 @@ const Login = () => {
     }
   }, [user, loading, navigate]);
 
-  if (loading)
+  if (loading && !error)
     return (
       <div className="flex flex-col justify-center items-center min-h-96">
         <Loader />

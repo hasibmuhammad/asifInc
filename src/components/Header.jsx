@@ -12,7 +12,7 @@ const Header = () => {
         </h1>
       </Link>
       <div>
-        {loading && <Loader />}
+        {/* {loading && <Loader />} */}
         {!loading && !user && (
           <Link to={"/signin"}>
             <button className="px-4 py-2 outline rounded font-bold">
