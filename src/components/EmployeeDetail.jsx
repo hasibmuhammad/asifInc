@@ -24,6 +24,10 @@ const EmployeeDetail = () => {
 
   return (
     <>
+      <h1 className="text-3xl font-bold">Employee Details</h1>
+      <br />
+      <hr />
+      <br />
       {loading && <Loader />}
       {!loading && (
         <>
