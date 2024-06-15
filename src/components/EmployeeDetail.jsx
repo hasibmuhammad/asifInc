@@ -12,7 +12,7 @@ const EmployeeDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/employees/${id}`)
+      .get(`https://asif-inc-backend.vercel.app/employees/${id}`)
       .then((res) => {
         if (res?.data) {
           setInfo(res.data);

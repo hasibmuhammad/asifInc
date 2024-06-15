@@ -29,7 +29,10 @@ const Modal = ({ info }) => {
 
     // employee creation
     axios
-      .patch(`http://localhost:3000/employees/${info._id}`, updateUser)
+      .patch(
+        `https://asif-inc-backend.vercel.app/employees/${info._id}`,
+        updateUser
+      )
       .then((res) => {
         if (res.data?.modifiedCount > 0) {
           notifySuccess("Employee Updated Succussfully!");

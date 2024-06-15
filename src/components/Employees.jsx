@@ -14,9 +14,9 @@ const Employees = () => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/employees").then((res) => {
+    axios.get("https://asif-inc-backend.vercel.app/employees").then((res) => {
       if (res?.data) {
-        setTableData(res.data);
+        setTableData(res?.data);
         setLoading(false);
       }
     });
@@ -28,27 +28,29 @@ const Employees = () => {
 
   // handle block / unblock
   const handleBlock = (id) => {
-    axios.patch(`http://localhost:3000/block/${id}`).then((res) => {
-      if (res?.data?.result?.modifiedCount > 0) {
-        const updatedEmployee = res?.data?.employee;
+    axios
+      .patch(`https://asif-inc-backend.vercel.app/block/${id}`)
+      .then((res) => {
+        if (res?.data?.result?.modifiedCount > 0) {
+          const updatedEmployee = res?.data?.employee;
 
-        if (!updatedEmployee.blocked === true) {
-          failed(`You've blocked ${updatedEmployee.firstname} successfully!`);
-        } else {
-          success(
-            `You've unblocked ${updatedEmployee.firstname} successfully!`
+          if (!updatedEmployee.blocked === true) {
+            failed(`You've blocked ${updatedEmployee.firstname} successfully!`);
+          } else {
+            success(
+              `You've unblocked ${updatedEmployee.firstname} successfully!`
+            );
+          }
+
+          setTableData((prev) =>
+            prev.map((employee) => {
+              return employee._id === id
+                ? { ...updatedEmployee, blocked: !updatedEmployee.blocked }
+                : employee;
+            })
           );
         }
-
-        setTableData((prev) =>
-          prev.map((employee) => {
-            return employee._id === id
-              ? { ...updatedEmployee, blocked: !updatedEmployee.blocked }
-              : employee;
-          })
-        );
-      }
-    });
+      });
   };
   // handle delete
   const handleDelete = (id) => {
@@ -63,7 +65,7 @@ const Employees = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/delete/${id}`)
+          .delete(`https://asif-inc-backend.vercel.app/delete/${id}`)
           .then((res) => {
             if (res?.data?.deletedCount > 0) {
               success("Employee deleted successfully!");

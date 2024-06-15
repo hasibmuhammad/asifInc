@@ -32,7 +32,7 @@ const CreateUser = () => {
     // employee creation
     axios
       .post(
-        `http://localhost:3000/create-employee?email=${user?.email}`,
+        `https://asif-inc-backend.vercel.app/create-employee?email=${user?.email}`,
         newUser
       )
       .then((res) => {
