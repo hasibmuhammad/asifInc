@@ -16,7 +16,7 @@ const Employees = () => {
   useEffect(() => {
     axios.get("https://asif-inc-backend.vercel.app/employees").then((res) => {
       if (res?.data) {
-        setTableData(res?.data);
+        setTableData(res.data);
         setLoading(false);
       }
     });
