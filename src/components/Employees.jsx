@@ -7,6 +7,7 @@ const { Column } = Table;
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 const Employees = () => {
   const [loading, setLoading] = useState(true);
@@ -25,16 +26,18 @@ const Employees = () => {
   const success = (message) => toast.success(message);
   const failed = (message) => toast.error(message);
 
-  // handle block
+  // handle block / unblock
   const handleBlock = (id) => {
     axios.patch(`http://localhost:3000/block/${id}`).then((res) => {
       if (res?.data?.result?.modifiedCount > 0) {
         const updatedEmployee = res?.data?.employee;
 
         if (!updatedEmployee.blocked === true) {
-          failed("You've blocked successfully!");
+          failed(`You've blocked ${updatedEmployee.firstname} successfully!`);
         } else {
-          success("You've unblocked successfully!");
+          success(
+            `You've unblocked ${updatedEmployee.firstname} successfully!`
+          );
         }
 
         setTableData((prev) =>
@@ -49,7 +52,30 @@ const Employees = () => {
   };
   // handle delete
   const handleDelete = (id) => {
-    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:3000/delete/${id}`)
+          .then((res) => {
+            if (res?.data?.deletedCount > 0) {
+              success("Employee deleted successfully!");
+
+              setTableData((prev) =>
+                prev.filter((employee) => employee._id !== id)
+              );
+            }
+          })
+          .catch((error) => console.error(error));
+      }
+    });
   };
   return (
     <>

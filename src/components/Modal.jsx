@@ -110,7 +110,7 @@ const Modal = ({ info }) => {
               <label>Email</label>
               <br />
               <input
-                className="border border-blue-200 w-full px-4 py-2 rounded-lg outline-none"
+                className="cursor-not-allowed border border-blue-200 w-full px-4 py-2 rounded-lg outline-none"
                 type="email"
                 name="email"
                 defaultValue={info.email}
