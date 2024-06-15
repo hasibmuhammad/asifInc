@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Space, Table, Tag } from "antd";
 import Loader from "./Loader";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const { Column } = Table;
 
-const Users = () => {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const Employees = () => {
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
+
   useEffect(() => {
     axios.get("http://localhost:3000/employees").then((res) => {
       if (res?.data) {
@@ -17,9 +21,31 @@ const Users = () => {
     });
   }, []);
 
+  // toast
+  const success = (message) => toast.success(message);
+  const failed = (message) => toast.error(message);
+
   // handle block
   const handleBlock = (id) => {
-    console.log(id);
+    axios.patch(`http://localhost:3000/block/${id}`).then((res) => {
+      if (res?.data?.result?.modifiedCount > 0) {
+        const updatedEmployee = res?.data?.employee;
+
+        if (!updatedEmployee.blocked === true) {
+          failed("You've blocked successfully!");
+        } else {
+          success("You've unblocked successfully!");
+        }
+
+        setTableData((prev) =>
+          prev.map((employee) => {
+            return employee._id === id
+              ? { ...updatedEmployee, blocked: !updatedEmployee.blocked }
+              : employee;
+          })
+        );
+      }
+    });
   };
   // handle delete
   const handleDelete = (id) => {
@@ -52,7 +78,7 @@ const Users = () => {
                   onClick={() => handleBlock(record._id)}
                   className="font-semibold text-red-400"
                 >
-                  Block
+                  {record.blocked ? "Unblock" : "Block"}
                 </button>
                 <button
                   onClick={() => handleDelete(record._id)}
@@ -65,7 +91,8 @@ const Users = () => {
           />
         </Table>
       )}
+      <ToastContainer />
     </>
   );
 };
-export default Users;
+export default Employees;
