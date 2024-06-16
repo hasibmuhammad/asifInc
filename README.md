@@ -1,8 +1,28 @@
-# React + Vite
+# ASIF Inc.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**A Fullstack Application** to manage employee information which was developed for the organization Asif Inc.
 
-Currently, two official plugins are available:
+##### Features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Admin Login(Contact for admin login credentials)
+- Create Employee Information with Name, Email, Phone Number.
+- View Details of Individual Employee
+- Update Employee Information using Modal
+- Admin can Block/Unblock Employee in real-time.
+- Admin can Delete the Employee.
+- Nice Loading effect
+- Employee List with Table Pagination
+
+##### Technologies Used:
+
+- MongoDB
+- Express
+- React Js
+- Node.js
+- Firebase Authentication
+- Ant Design
+- Tailwind Css
+
+##### Live URL:
+
+https://asifinc-7eed0.web.app/
